@@ -1,7 +1,6 @@
 package testcases;
 
 import base.TestBase;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -20,52 +19,53 @@ public class ContactPageTest extends TestBase {
     TestUtil testUtil;
     ContactsPage contactsPage;
 
-    public ContactPageTest(){
+    public ContactPageTest() {
         super();
     }
 
     @BeforeMethod
-    public void setUp(){
+    public void setUp() {
         initialization();
         testUtil = new TestUtil();
         loginpage = new LoginPage();
-        homePage = loginpage.login(properties.getProperty("username"),properties.getProperty("password"));
+        homePage = loginpage.login(properties.getProperty("username"), properties.getProperty("password"));
         testUtil.switchToFrame("mainpanel");
         contactsPage = homePage.selectContactTab();
     }
 
     @Test(priority = 1)
-    public void verifyContactsLabel(){
+    public void verifyContactsLabel() {
         Assert.assertTrue(contactsPage.contactLabelVerification(), "Contacts label is missing");
     }
 
     @Test(priority = 2)
-    public void selectSingleContact(){
+    public void selectSingleContact() {
         contactsPage.selectContactByName("Aarav Mehra");
     }
 
     @Test(priority = 3)
-    public void selectMultipleContact(){
+    public void selectMultipleContact() {
         contactsPage.selectContactByName("Aarav Mehra");
         contactsPage.selectContactByName("00Himanshu sharma");
     }
 
     @DataProvider
-    public Object[][] getNewContactData(){
+    public Object[][] getNewContactData() {
         //C:\Users\kumariv\IdeaProjects\TestAutomations\src\main\java\testdata\NewContactDetails.xlsx
-        String filePath = Paths.get("C:","Users","kumariv","IdeaProjects","TestAutomations","src", "main", "java", "testdata", "NewContactDetails.xlsx").toString();
+        String filePath = Paths.get("C:", "Users", "kumariv", "IdeaProjects", "TestAutomations", "src", "main", "java", "testdata", "NewContactDetails.xlsx").toString();
         Object[][] data = TestUtil.excelReader(filePath, "Sheet1");
         return data;
     }
 
     @Test(priority = 4, dataProvider = "getNewContactData")
-    public void createNewContact(String title, String firstName, String middleName, String lastName){
+    public void createNewContact(String title, String firstName, String middleName, String lastName) {
         homePage.selectNewContactDropdown();
         contactsPage.createNewContact(title, firstName, middleName, lastName);
     }
+
     @AfterMethod
-    public void tearDown(){
-       driver.quit();
+    public void tearDown() {
+        driver.quit();
     }
 
 }

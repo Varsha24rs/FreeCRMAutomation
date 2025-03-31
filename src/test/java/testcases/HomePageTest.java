@@ -15,7 +15,7 @@ public class HomePageTest extends TestBase {
     HomePage homePage;
     TestUtil testUtil;
 
-    public HomePageTest(){
+    public HomePageTest() {
         super();
     }
 
@@ -28,26 +28,26 @@ public class HomePageTest extends TestBase {
     }
 
     @Test(priority = 1)
-    public void homePageTitleTest(){
+    public void homePageTitleTest() {
         String title = homePage.getHomePageTitle();
         //System.out.println("Title of homepage is "+title);
         Assert.assertEquals(title, "CRMPRO", "Home page title not matched");
     }
 
-    @Test(priority=2)
-    public void verifyUsernameAfterLogin(){
+    @Test(priority = 2)
+    public void verifyUsernameAfterLogin() {
         testUtil.switchToFrame("mainpanel");
         Assert.assertTrue(homePage.usernamePostLogin());
     }
 
-    @Test(priority=3)
-    public void clickOnContactTab(){
+    @Test(priority = 3)
+    public void clickOnContactTab() {
         testUtil.switchToFrame("mainpanel");
         homePage.selectContactTab();
     }
 
     @AfterMethod
-    public void tearDown(){
+    public void tearDown() {
         driver.quit();
     }
 
